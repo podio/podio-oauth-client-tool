@@ -18,6 +18,7 @@ let sessionStore = {
       } else if (err) {
         callback()
       } else {
+        winston.log('debug', 'Reading from sessionStore', data)
         callback(JSON.parse(data))
       }
     })
@@ -26,9 +27,12 @@ let sessionStore = {
   set(podioOauth, authType, callback) {
 
     let filePath = path.join(__dirname, 'sessionStore.json');
-    fs.writeFile(filePath, JSON.stringify(podioOauth), err => {
+    let data = JSON.stringify(podioOauth)
+
+    fs.writeFile(filePath, data, err => {
 
       if (err) throw err;
+      winston.log('debug', 'Writing to sessionStore', data)
       callback()
     })
   }
@@ -36,6 +40,7 @@ let sessionStore = {
 
 winston.level = 'debug'
 const PORT = 8000
+
 let podio = new podioJS({
   authType: 'server',
   clientId: 'oauthtesting',
@@ -46,7 +51,6 @@ let podio = new podioJS({
 })
 
 const redirecUrl = 'http://localhost:8000/callback'
-
 const config = {
   authUrl: podio.getAuthorizationURL(redirecUrl)
 }
@@ -75,7 +79,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   podio.request('GET', '/org/').then(result => {
-    res.render('dashboard')
+    res.render('index')
   })
 })
 
@@ -86,7 +90,7 @@ app.get('/callback', (req, res) => {
 })
 
 app.get('/auth', (req, res) => {
-  res.render('auth', config)
+  res.render('index', config)
 })
 
 app.get('/proxy*', (req, res) => {

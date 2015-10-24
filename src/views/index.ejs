@@ -12,6 +12,10 @@
   <script type="text/javascript">
     System.import('src/app.js');
   </script>
-  <div id="root-element"></div>
+  <% if (typeof authUrl !== 'undefined') { %>
+    <a href="<%= authUrl %>">Connect client</a>
+  <% } else { %>
+    <div id="root-element"></div>
+  <% } %>
 </body>
 </html>

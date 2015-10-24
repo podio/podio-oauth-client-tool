@@ -55,7 +55,9 @@ export default class Tester extends Component {
   send() {
 
     let addResonse = (collection, object) => {
+
       this.setState(previousState => {
+
         previousState[collection].unshift(object);
         return previousState
       });
@@ -69,7 +71,7 @@ export default class Tester extends Component {
       response.json().then(json => {
 
         let collection = ['errors', 'responses'][Number(response.ok)];
-        
+
         addResonse(collection, {
           json: json,
           response: response,
@@ -82,6 +84,7 @@ export default class Tester extends Component {
   handleChangeParam(key, evt) {
 
     this.setState(previousState => {
+
       previousState.paramsData[key] = evt.target.value;
       previousState.url = this.formatUrl(this.props.url, previousState.paramsData)
       return previousState;
@@ -146,6 +149,8 @@ export class Root extends Component {
       <div>
         <Tester url="/org/" title="Get orgs" />
         <Tester url="/org/:id/test/:app" title="Get single org" params={{ id: 'integer', app: 'integer' }} />
+        <Tester url="/user/" title="Get User" />
+
       </div>
     );
   }
