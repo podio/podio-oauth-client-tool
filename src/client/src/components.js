@@ -3,11 +3,16 @@ import React, { Component } from 'react';
 export default class Tester extends Component {
 
   constructor(props) {
+
     super();
+
+    let paramsData = this.generateData(props.params);
+
     this.state = {
-      paramsData: this.generateData(props.params),
-      response: null,
-      error: null
+      paramsData: paramsData,
+      url: this.formatUrl(props.url, paramsData),
+      responses: [],
+      errors: []
     };
   }
 
@@ -34,7 +39,6 @@ export default class Tester extends Component {
     }, {});
   }
 
-  // Merges in variables to the URL
   formatUrl(url, values) {
 
     let regex = /:([a-z0-9]+)([/]|$)/g;
@@ -50,48 +54,57 @@ export default class Tester extends Component {
 
   send() {
 
-    let url = `/proxy${this.props.url}`;
+    let addResonse = (collection, object) => {
+      this.setState(previousState => {
+        previousState[collection].unshift(object);
+        return previousState
+      });
+    };
 
-    fetch(url, {
+    fetch(`/proxy${this.state.url}`, {
       method: this.props.method,
     })
     .then(response => {
-      this.setState({
-        response: response
-      })
-    })
-    .catch(err => {
-      this.setState({
-        error: err
-      })
+
+      response.json().then(json => {
+
+        let collection = ['errors', 'responses'][Number(response.ok)];
+        
+        addResonse(collection, {
+          json: json,
+          response: response,
+          time: new Date()
+        });
+      });
     });
   }
 
   handleChangeParam(key, evt) {
+
     this.setState(previousState => {
       previousState.paramsData[key] = evt.target.value;
+      previousState.url = this.formatUrl(this.props.url, previousState.paramsData)
       return previousState;
     });
   }
 
   render() {
 
-    let { url } = this.props;
-
-    url = this.formatUrl(url, this.state.paramsData);
+    let { url, paramsData } = this.state;
+    let { title } = this.props;
 
     return (
       <div className="tester">
-        <div className="title">{this.props.title}</div>
+        <div className="title">{title}</div>
         <div><label htmlFor=""></label>{url}</div>
         {
-          Object.keys(this.state.paramsData).map(key => {
+          Object.keys(paramsData).map(key => {
             return (
               <div key={key}>
                 <label>{key}: </label>
                 <input
                   type="text"
-                  value={this.state.paramsData[key]}
+                  value={paramsData[key]}
                   onChange={this.handleChangeParam.bind(this, key)}
                 />
               </div>
@@ -101,8 +114,16 @@ export default class Tester extends Component {
         <div>
           <label></label><a href="#" onClick={this.send.bind(this)}>Send request</a>
         </div>
-        <div className="response">{this.state.response}</div>
-        <div className="error">{this.state.error}</div>
+        <div className="responses">
+          {this.state.responses.map((response, index) => {
+            return <div className="response" key={index}>{response.time.toString()}</div>;
+          })}
+        </div>
+        <div className="errors">
+          {this.state.errors.map((error, index) => {
+            return <div className="error" key={index}>{JSON.stringify(error)}</div>;
+          })}
+        </div>
       </div>
     );
   }
@@ -119,6 +140,7 @@ Tester.propTypes = {
 }
 
 export class Root extends Component {
+
   render() {
     return (
       <div>

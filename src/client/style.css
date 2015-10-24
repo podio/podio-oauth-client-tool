@@ -17,3 +17,11 @@ body {
   font-size: 20px;
   margin-bottom: 10px;
 }
+
+.tester .responses .response {
+  color: green;
+}
+
+.tester .errors .error {
+  color: red;
+}

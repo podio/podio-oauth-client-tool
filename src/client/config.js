@@ -12,6 +12,9 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+  bundles: {
+    "dependencies-bundle.js": []
+  },
 
   map: {
     "babel": "npm:babel-core@5.8.25",
