@@ -35,7 +35,10 @@ let sessionStore = {
 
       if (err) throw err;
       winston.log('debug', 'Writing to sessionStore', data)
-      callback()
+
+      if (callback) {
+        callback()
+      }
     })
   }
 }

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "cd src/client && jspm bundle 'src/**/* - [src/**/*]' dep-bundle.js --skip-source-maps"
+    "dev-build": "cd src/client && jspm bundle 'src/**/* - [src/**/*]' dep-bundle.js --skip-source-maps",
+    "build": "cd src/client && jspm bundle 'src/**/*' bundle.js",
+    "dev": "npm run dev-build && node-sass -w src/client/style.scss src/client/style.css"
   },
   "author": "",
   "license": "ISC",
@@ -35,5 +37,8 @@
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
     }
+  },
+  "devDependencies": {
+    "node-sass": "3.4.0"
   }
 }

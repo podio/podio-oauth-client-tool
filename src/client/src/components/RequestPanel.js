@@ -43,7 +43,7 @@ export default class RequestPanel extends Component {
 
   formatUrl(url, values) {
 
-    let regex = /:([a-z0-9]+)([/]|$)/g;
+    let regex = /:([a-z0-9-_]+)([/]|$)/g;
     let match = regex.exec(url);
 
     while (match != null) {
@@ -100,32 +100,36 @@ export default class RequestPanel extends Component {
   render() {
 
     let { url, paramsData } = this.state;
-    let { title } = this.props;
+    let { title, method } = this.props;
 
     return (
-      <div className="tester">
+      <div className="request-panel">
+      <div className="header">
         <div className="title">{title}</div>
-        <div><label htmlFor=""></label>{url}</div>
+      </div>
+      <div className="inputs">
         {
           Object.keys(paramsData).map(key => {
             return (
-              <div key={key}>
-                <label>{key}: </label>
-                <input
-                  type="text"
-                  value={paramsData[key]}
-                  onChange={this.handleChangeParam.bind(this, key)}
-                />
+              <div className="input" key={key}>
+                <div>{key}:
+                  <input
+                    type="text"
+                    value={paramsData[key]}
+                    onChange={this.handleChangeParam.bind(this, key)}
+                  />
+                </div>
               </div>
             );
           })
         }
-        <div>
-          <label></label><a href="#" onClick={this.send}>Send request</a>
         </div>
-        <div className="responses">
+        <div className="button">
+          <a href="#" onClick={this.send}>{method.toUpperCase()} {url}</a>
+        </div>
+        <div className="successes">
           {this.state.responses.map((responseElement, index) => {
-            return <div className="response" key={responseElement.props.time.toString()}>{responseElement}</div>;
+            return <div className="success" key={responseElement.props.time.toString()}>{responseElement}</div>;
           })}
         </div>
         <div className="errors">

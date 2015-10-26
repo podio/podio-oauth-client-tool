@@ -1,0 +1,88 @@
+body {
+  font-family: sans-serif;
+}
+
+.request-panel {
+  padding: 10px;
+  margin: 10px;
+  border:1px solid #eee;
+  min-width: 500px;
+
+  display: flex;
+  flex-flow: column;
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    
+    .title {
+      font-size: 20px;
+    }
+  }
+
+  .inputs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+
+  .input {
+    border: 1px solid #eee;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+
+    input {
+      font-size: 14px;
+      outline: none;
+      border: none;
+      padding: 5px;
+    }
+  }
+
+  .button {
+
+    a {
+      display: inline-block;
+      background-color: #90dd84;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+    }
+  }
+
+  .successes .success {
+    color: green;
+  }
+
+  .errors .error {
+    color: red;
+  }
+}
+
+.response {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #eee;
+
+  .json {
+    display: none;
+  }
+
+  .open .json {
+    display: block;
+  }
+
+  pre {
+    max-height: 500px;
+    overflow: auto;
+  }
+}
+
+.root {
+  
+}
