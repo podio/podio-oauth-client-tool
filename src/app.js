@@ -9,7 +9,7 @@ let fs = require('fs')
 let sessionStore = {
   get(authType, callback) {
 
-    let filePath = path.join(__dirname, 'sessionStore.json');
+    let filePath = path.join(__dirname, 'sessionStore.json')
 
     fs.readFile(filePath, 'utf8', (err, data) => {
 
@@ -26,7 +26,7 @@ let sessionStore = {
 
   set(podioOauth, authType, callback) {
 
-    let filePath = path.join(__dirname, 'sessionStore.json');
+    let filePath = path.join(__dirname, 'sessionStore.json')
     let data = JSON.stringify(podioOauth)
 
     fs.writeFile(filePath, data, err => {
@@ -59,7 +59,7 @@ const config = {
 app.engine('ejs', require('ejs').renderFile)
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views/')
-app.use('/client', express.static('src/client'));
+app.use('/client', express.static('src/client'))
 
 // Middleware
 app.use((req, res, next) => {
@@ -84,6 +84,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/callback', (req, res) => {
+  console.log(req.query);
   podio.getAccessToken(req.query.code, redirecUrl, err => {
     res.redirect('/')
   })
@@ -96,7 +97,9 @@ app.get('/auth', (req, res) => {
 app.get('/proxy*', (req, res) => {
   let url = req.params[0]
   let { method } = req
-  winston.log('debug', url, method)
+
+  winston.log('debug', method, url)
+
   podio.request(req.method, url).then(result => {
     res.json(result)
   })
@@ -107,5 +110,5 @@ app.get('/proxy*', (req, res) => {
 })
 
 app.listen(8000, () => {
-  winston.info('debug', `Listening on ${PORT}`)
+  winston.info(`Listening on ${PORT}`)
 })

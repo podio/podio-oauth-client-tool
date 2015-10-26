@@ -25,3 +25,20 @@ body {
 .tester .errors .error {
   color: red;
 }
+
+.response {
+  margin: 10px;
+  border-bottom: 1px solid #eee;
+}
+.response .json {
+  display: none;
+}
+
+.response .open .json {
+  display: block;
+}
+
+.response pre {
+  max-height: 500px;
+  overflow: auto;
+}

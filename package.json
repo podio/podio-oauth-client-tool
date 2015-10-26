@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "cd src/client && jspm bundle 'src/**/* - [src/**/*]' dep-bundle.js --skip-source-maps"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +22,11 @@
       "baseURL": "src/client"
     },
     "dependencies": {
+      "classnames": "npm:classnames@^2.2.0",
+      "highlight.js": "npm:highlight.js@^8.9.1",
+      "moment": "npm:moment@^2.10.6",
       "react": "npm:react@^0.14.0",
+      "react-addons-update": "npm:react-addons-update@^0.14.0",
       "react-dom": "npm:react-dom@^0.14.0"
     },
     "devDependencies": {
