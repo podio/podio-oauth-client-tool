@@ -94,6 +94,16 @@ app.get('/auth', (req, res) => {
   res.render('index', config)
 })
 
+app.get('/logout', (req, res) => {
+  podio.request('POST', '/oauth/grant/invalidate')
+  .then((result) => {
+    res.redirect('/auth')
+  })
+  .catch(err => {
+    throw err
+  })
+})
+
 app.get('/proxy*', (req, res) => {
   let url = req.params[0]
   let { method } = req

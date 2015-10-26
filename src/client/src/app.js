@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Root, Connect } from './components';
+import Root from './components/Root';
+import Connect from './components/Connect';
 
 let rootElement = document.getElementById('root-element');
 
