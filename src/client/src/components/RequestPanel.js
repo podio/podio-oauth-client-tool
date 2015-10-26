@@ -125,12 +125,12 @@ export default class RequestPanel extends Component {
         </div>
         <div className="responses">
           {this.state.responses.map((responseElement, index) => {
-            return <div className="response" key={index}>{responseElement}</div>;
+            return <div className="response" key={responseElement.props.time.toString()}>{responseElement}</div>;
           })}
         </div>
         <div className="errors">
           {this.state.errors.map((responseElement, index) => {
-            return <div className="error" key={index}>{responseElement}</div>;
+            return <div className="error" key={responseElement.props.time.toString()}>{responseElement}</div>;
           })}
         </div>
       </div>

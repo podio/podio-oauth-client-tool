@@ -5,11 +5,13 @@ let winston = require('winston')
 let path = require('path')
 let fs = require('fs')
 
+let configGenerator = require('./configGenerator')
+
 // Config
 let sessionStore = {
   get(authType, callback) {
 
-    let filePath = path.join(__dirname, 'sessionStore.json')
+    let filePath = path.join(__dirname, 'tmp', 'sessionStore.json')
 
     fs.readFile(filePath, 'utf8', (err, data) => {
 
@@ -26,7 +28,7 @@ let sessionStore = {
 
   set(podioOauth, authType, callback) {
 
-    let filePath = path.join(__dirname, 'sessionStore.json')
+    let filePath = path.join(__dirname, 'tmp', 'sessionStore.json')
     let data = JSON.stringify(podioOauth)
 
     fs.writeFile(filePath, data, err => {
@@ -41,19 +43,10 @@ let sessionStore = {
 winston.level = 'debug'
 const PORT = 8000
 
-let podio = new podioJS({
-  authType: 'server',
-  clientId: 'oauthtesting',
-  clientSecret: '1JFBMVraP9MtogCGTZHV2AKbYWmm37qVKXUI70P0v9DTbAlT21R5CYriY5AjiPYN'
-}, {
-  apiURL: 'http://api.nextpodio.dk',
-  sessionStore: sessionStore
-})
+let podio;
 
 const redirecUrl = 'http://localhost:8000/callback'
-const config = {
-  authUrl: podio.getAuthorizationURL(redirecUrl)
-}
+let authConfig;
 
 // Views
 app.engine('ejs', require('ejs').renderFile)
@@ -91,12 +84,12 @@ app.get('/callback', (req, res) => {
 })
 
 app.get('/auth', (req, res) => {
-  res.render('index', config)
+  res.render('index', authConfig)
 })
 
 app.get('/logout', (req, res) => {
   podio.request('POST', '/oauth/grant/invalidate')
-  .then((result) => {
+  .then(() => {
     res.redirect('/auth')
   })
   .catch(err => {
@@ -119,6 +112,25 @@ app.get('/proxy*', (req, res) => {
   })
 })
 
-app.listen(8000, () => {
-  winston.info(`Listening on ${PORT}`)
-})
+
+configGenerator({
+    tmpDir: path.join(__dirname, 'tmp')
+  }, function(config) {
+  
+  podio  = new podioJS({
+    authType: 'server',
+    clientId: config.clientId,
+    clientSecret: config.clientSecret
+  }, {
+    apiURL: config.apiURL,
+    sessionStore: sessionStore
+  })
+
+  authConfig = {
+    authUrl: podio.getAuthorizationURL(redirecUrl)
+  }
+
+  app.listen(PORT, () => {
+    winston.info(`Listening on ${PORT}`)
+  })
+});

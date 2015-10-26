@@ -5,3 +5,4 @@ node_modules/
 jspm_packages
 src/sessionStore.json
 src/client/dep-bundle.js
+src/tmp/
