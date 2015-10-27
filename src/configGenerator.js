@@ -8,9 +8,7 @@ module.exports = function(options, callback) {
     if(!err) {
       try {
         fs.unlinkSync(path.join(options.tmpDir, 'sessionStore.json'));
-      } catch (e) {
-        console.log(e)
-      }
+      } catch (e) {}
 
       callback(JSON.parse(data))
     } else {
