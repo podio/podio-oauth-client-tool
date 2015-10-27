@@ -100,13 +100,13 @@ app.get('/logout', (req, res) => {
   })
 })
 
-app.get('/proxy*', (req, res) => {
+app.all('/proxy*', (req, res) => {
   let url = req.params[0]
   let { method } = req
 
   winston.log('debug', method, url)
 
-  podio.request(req.method, url).then(result => {
+  podio.request(method, url).then(result => {
     res.json(result)
   })
   .catch(err => {
