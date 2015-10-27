@@ -16,7 +16,7 @@ module.exports = function(options, callback) {
         {
           name: 'apiURL',
           message: 'Please enter API URL',
-          default: 'http://api.nextpodio.dk'
+          default: 'https://api.nextpodio.dk'
         },
         {
           name: 'clientId',
