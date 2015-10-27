@@ -3,7 +3,7 @@ let app = express()
 let podioJS = require('podio-js').api
 let winston = require('winston')
 let path = require('path')
-let fs = require('fs')
+let fs = require('fs-extra')
 
 let configGenerator = require('./configGenerator')
 
@@ -31,7 +31,7 @@ let sessionStore = {
     let filePath = path.join(__dirname, 'tmp', 'sessionStore.json')
     let data = JSON.stringify(podioOauth)
 
-    fs.writeFile(filePath, data, err => {
+    fs.outputFile(filePath, data, err => {
 
       if (err) throw err;
       winston.log('debug', 'Writing to sessionStore', data)
