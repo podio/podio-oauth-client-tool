@@ -8,9 +8,12 @@ export default class RequestPanel extends Component {
 
     super();
 
-    let paramsData = this.generateData(props.params);
+    let urlParams = this.extractUrlParams(props.url);
+    let allParams = Object.assign(urlParams, props.params);
+    let paramsData = this.generateData(allParams);
 
     this.state = {
+      urlParams: urlParams,
       paramsData: paramsData,
       url: this.formatUrl(props.url, paramsData),
       responses: [],
@@ -40,6 +43,21 @@ export default class RequestPanel extends Component {
       result[key] = getValue(type);
       return result;
     }, {});
+  }
+
+  extractUrlParams(url) {
+
+    let params = {};
+
+    let regex = /:([a-z0-9-_]+)([/]|$)/g;
+    let match = regex.exec(url);
+
+    while (match != null) {
+      params[match[1]] = 'integer'
+      match = regex.exec(url);
+    }
+
+    return params;
   }
 
   formatUrl(url, values) {
