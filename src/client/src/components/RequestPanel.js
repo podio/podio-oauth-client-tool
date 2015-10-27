@@ -14,7 +14,8 @@ export default class RequestPanel extends Component {
       paramsData: paramsData,
       url: this.formatUrl(props.url, paramsData),
       responses: [],
-      errors: []
+      errors: [],
+      isRequesting: false
     };
   }
 
@@ -58,6 +59,10 @@ export default class RequestPanel extends Component {
 
     evt.preventDefault();
 
+    this.setState({
+      isRequesting: true
+    });
+
     let addResonse = (collection, props) => {
 
       this.setState(previousState => {
@@ -65,6 +70,8 @@ export default class RequestPanel extends Component {
         let responseElement = <Response {...props} />;
 
         previousState[collection].unshift(responseElement);
+        previousState.isRequesting = false;
+
         return previousState;
       });
     };
@@ -81,7 +88,8 @@ export default class RequestPanel extends Component {
         addResonse(collection, {
           json: json,
           response: response,
-          time: new Date()
+          time: new Date(),
+          url: this.state.url
         });
       });
     });
@@ -127,6 +135,7 @@ export default class RequestPanel extends Component {
         <div className="button">
           <a href="#" onClick={this.send}>{method.toUpperCase()} {url}</a>
         </div>
+        {this.state.isRequesting ? <div className="request-progress">Requesting {url}...</div> : ''}
         <div className="successes">
           {this.state.responses.map((responseElement, index) => {
             return <div className="success" key={responseElement.props.time.toString()}>{responseElement}</div>;

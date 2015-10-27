@@ -26,18 +26,20 @@ export default class Response extends Component {
   render() {
 
     let { open } = this.state;
-    let { time, json, response } = this.props;
+    let { time, json, response, url } = this.props;
 
     let className = classNames({
       open: open
     });
 
     return (
-      <div className="response">
-        <div className="time">{moment(time).format('hh:mm:ss')}</div>
-        <div className="code">{response.status}</div>
-        <div className={className} onClick={this.handleClickJson}>
-          Response:
+      <div className="response" onClick={this.handleClickJson}>
+        <div className="header">
+          <div className="url">{url}</div>
+          <div className="code">{response.status}</div>
+          <div className="time">{moment(time).format('hh:mm:ss')}</div>
+        </div>
+        <div className={className}>
           <div className="json">
             <pre><code className="javascript" ref="code">{JSON.stringify(json, null, 4)}</code></pre>
           </div>

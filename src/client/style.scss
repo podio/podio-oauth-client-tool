@@ -2,20 +2,30 @@ body {
   font-family: sans-serif;
 }
 
+.section {
+  padding: 10px;
+}
+
 .request-panel {
   padding: 10px;
-  margin: 10px;
+  margin: 0 0 10px 0;
   border:1px solid #eee;
   min-width: 500px;
+  border-radius: 5px;
+
+  max-width: 800px;
 
   display: flex;
   flex-flow: column;
+
+  .request-progress {
+    padding: 10px;
+    text-align: center;
+  }
   
-  .header {
+  > .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-
     
     .title {
       font-size: 20px;
@@ -26,11 +36,12 @@ body {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+    padding: 10px 0;
   }
 
   .input {
     border: 1px solid #eee;
-    margin: 10px;
+    margin: 0 10px 0 0;
     display: flex;
     justify-content: space-between;
     padding-left: 5px;
@@ -47,11 +58,20 @@ body {
 
     a {
       display: inline-block;
-      background-color: #90dd84;
+      background-color: #ccc;
       color: white;
       padding: 10px;
       text-align: center;
       text-decoration: none;
+      border-radius: 3px;
+    }
+  }
+
+  &:hover {
+    .button {
+      a {
+        background-color: #90dd84;
+      }
     }
   }
 
@@ -65,9 +85,15 @@ body {
 }
 
 .response {
-  margin: 5px;
+  margin: 10px 0 0 0;
   padding: 5px;
-  border: 1px solid #eee;
+  border-top: 1px solid #eee;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
 
   .json {
     display: none;
