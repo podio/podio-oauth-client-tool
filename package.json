@@ -41,6 +41,7 @@
     }
   },
   "devDependencies": {
+    "jspm": "0.16.13",
     "node-sass": "3.4.0"
   }
 }
