@@ -8,6 +8,10 @@
 
 `$ npm start`
 
+##Resetting
+
+`$ npm run reset`
+
 ##Usage
 
 ###First run

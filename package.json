@@ -9,7 +9,8 @@
     "dev-build": "cd src/client && jspm bundle 'src/**/* - [src/**/*]' dep-bundle.js --skip-source-maps",
     "build": "cd src/client && jspm bundle 'src/**/*' bundle.js",
     "dev": "npm run dev-build && node-sass -w src/client/style.scss src/client/style.css",
-    "setup": "npm install && jspm install && npm run dev-build && node-sass src/client/style.scss src/client/style.css"
+    "setup": "npm install && jspm install && npm run dev-build && node-sass src/client/style.scss src/client/style.css",
+    "reset": "rm -rf src/tmp & npm start"
   },
   "author": "",
   "license": "ISC",
