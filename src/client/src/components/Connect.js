@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 
+const PERMISSION_TYPES = ['read', 'write', 'delete', 'all']
+
 export default class Connect extends Component {
 
   constructor(props) {
@@ -36,7 +38,7 @@ export default class Connect extends Component {
 
     return Object.keys(this.state.scope).reduce((result, scopeType) => {
 
-      let scopePermissions = ['read', 'write', 'delete'].filter(scopePermission => scope[scopeType][scopePermission]);
+      let scopePermissions = PERMISSION_TYPES.filter(scopePermission => scope[scopeType][scopePermission]);
 
       if(scopePermissions.length) {
         return result + scopeType + ':' + scopePermissions.join(',') + ' ';
@@ -58,9 +60,7 @@ export default class Connect extends Component {
           <thead>
             <tr>
               <th></th>
-              <th>Read</th>
-              <th>Write</th>
-              <th>Delete</th>
+              {PERMISSION_TYPES.map(permission => <th key={permission}>{permission.toUpperCase()}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -68,7 +68,7 @@ export default class Connect extends Component {
               return (
                 <tr key={scopeType}>
                   <td>{scopeType}</td>
-                  {['read', 'write', 'delete'].map(scopePermission => {
+                  {PERMISSION_TYPES.map(scopePermission => {
 
                     let checked = scope[scopeType] && scope[scopeType][scopePermission];
                     return (
