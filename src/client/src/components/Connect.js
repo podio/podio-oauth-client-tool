@@ -39,7 +39,7 @@ export default class Connect extends Component {
       let scopePermissions = ['read', 'write', 'delete'].filter(scopePermission => scope[scopeType][scopePermission]);
 
       if(scopePermissions.length) {
-        return result + scopeType + ':' + scopePermissions.join(',');
+        return result + scopeType + ':' + scopePermissions.join(',') + ' ';
       }
       return result;
     }, url + '&scope=');
