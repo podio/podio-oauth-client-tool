@@ -11,6 +11,7 @@ export default class Connect extends Component {
 
     this.state = {
       scope: {
+        global: {},
         user: {},
         org: {},
         space: {},
