@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Response from './Response';
 import _ from 'lodash';
 
+const URL_PARAM_REGEX = /:([a-z0-9-_]+)([/]|$|[?])/g;
+const QUERY_PARAM_REGEX = /(\&|\?)([a-zA-Z0-9-_]+)=([a-zA-Z0-9-_]+)/g;
+
 export default class RequestPanel extends Component {
 
   constructor(props) {
@@ -88,25 +91,13 @@ export default class RequestPanel extends Component {
     }
   }
 
-  forEachUrlParam(url, fn) {
+  forEachMatch(regex, input, fn) {
 
-    let regex = /:([a-z0-9-_]+)([/]|$|[?])/g;
-    let match = regex.exec(url);    
-
-    while (match != null) {
-      fn(match);
-      match = regex.exec(url);
-    }
-  }
-
-  forEachQueryParam(url, fn) {
-
-    let regex = /(\&|\?)([a-zA-Z0-9-_]+)=([a-zA-Z0-9-_]+)/g;
-    let match = regex.exec(url);    
+    let match = regex.exec(input);    
 
     while (match != null) {
       fn(match);
-      match = regex.exec(url);
+      match = regex.exec(input);
     }
   }
 
@@ -114,7 +105,7 @@ export default class RequestPanel extends Component {
 
     let params = {};
 
-    this.forEachUrlParam(url, match => {
+    this.forEachMatch(URL_PARAM_REGEX, url, match => {
       params[match[1]] = 'integer';
     });
     return params;
@@ -124,7 +115,7 @@ export default class RequestPanel extends Component {
 
     let params = {};
 
-    this.forEachQueryParam(url, match => {
+    this.forEachMatch(QUERY_PARAM_REGEX, url, match => {
       params[match[2]] = match[3];
     });
     return params;
@@ -132,11 +123,11 @@ export default class RequestPanel extends Component {
 
   formatUrl(url, values) {
 
-    this.forEachUrlParam(url, match => {
+    this.forEachMatch(URL_PARAM_REGEX, url, match => {
       url = url.replace(match[0], values[match[1]] + match[2]);
     });
 
-    this.forEachQueryParam(url, match => {
+    this.forEachMatch(QUERY_PARAM_REGEX, url, match => {
       url = url.replace(match[0], (match[0].replace(match[3], values[match[2]])));
     });
 
