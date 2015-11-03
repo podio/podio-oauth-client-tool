@@ -115,7 +115,7 @@ export default class RequestPanel extends Component {
     let params = {};
 
     this.forEachUrlParam(url, match => {
-      params[match[1]] = 'integer'
+      params[match[1]] = 'integer';
     });
     return params;
   }
@@ -126,7 +126,7 @@ export default class RequestPanel extends Component {
 
     this.forEachQueryParam(url, match => {
       params[match[2]] = match[3];
-    })
+    });
     return params;
   }
 
@@ -176,11 +176,10 @@ export default class RequestPanel extends Component {
     };
 
     if (!~['GET', 'HEAD'].indexOf(method.toUpperCase())) {
-      requestOptions.body = JSON.stringify(this.nestObject(requestData))
+      requestOptions.body = JSON.stringify(this.nestObject(requestData));
     }
 
-    fetch(`/proxy${url}`, requestOptions)
-    .then(response => {
+    fetch(`/proxy${url}`, requestOptions).then(response => {
 
       response.json().then(json => {
 
@@ -202,6 +201,7 @@ export default class RequestPanel extends Component {
 
       let value = evt.target.value;
 
+      // If boolean, we'll be getting the value from a checkbox instead
       if (previousState.requestSpec[key] === 'boolean') {
         value = evt.target.checked;
       }
@@ -214,7 +214,6 @@ export default class RequestPanel extends Component {
 
   _renderInput = key => {
 
-    let keyType = _.get(this.state.requestSpec, key);
     let input = (
       <div>{key}: 
         <input
@@ -225,7 +224,7 @@ export default class RequestPanel extends Component {
       </div>
     );
 
-    if(keyType === 'boolean') {
+    if(_.get(this.state.requestSpec, key) === 'boolean') {
       input = (
         <div>{key}: 
           <input
@@ -236,10 +235,15 @@ export default class RequestPanel extends Component {
         </div>
       );
     }
+    return <div className="input" key={key}>{input}</div>;
+  }
 
-    return (
-      <div className="input" key={key}>{input}</div>
-    );
+  _renderSuccess = (responseElement, index) => {
+    return <div className="success" key={responseElement.props.time.toString()}>{responseElement}</div>;
+  }
+
+  _renderError = (responseElement, index) => {
+    return <div className="error" key={responseElement.props.time.toString()}>{responseElement}</div>;
   }
 
   render() {
@@ -259,16 +263,8 @@ export default class RequestPanel extends Component {
           <a href="#" onClick={this.send}>{method.toUpperCase()} {url}</a>
         </div>
         {this.state.isRequesting ? <div className="request-progress">Requesting {url}...</div> : ''}
-        <div className="successes">
-          {this.state.responses.map((responseElement, index) => {
-            return <div className="success" key={responseElement.props.time.toString()}>{responseElement}</div>;
-          })}
-        </div>
-        <div className="errors">
-          {this.state.errors.map((responseElement, index) => {
-            return <div className="error" key={responseElement.props.time.toString()}>{responseElement}</div>;
-          })}
-        </div>
+        <div className="successes">{this.state.responses.map(this._renderSuccess)}</div>
+        <div className="errors">{this.state.errors.map(this._renderError)}</div>
       </div>
     );
   }
