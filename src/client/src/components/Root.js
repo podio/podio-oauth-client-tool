@@ -42,6 +42,10 @@ export default class Root extends Component {
         </Section>
         <Section title="Tasks">
           <RequestPanel url="/task/:task_id" title="Get Task" />
+          <RequestPanel url="/task/" method="POST" title="Create Task" body={{
+            text: 'string',
+            responsible: 'integer'
+          }} />
           <RequestPanel url="/task/:task_id" method="DELETE" title="Delete Task" />
         </Section>
       </div>
