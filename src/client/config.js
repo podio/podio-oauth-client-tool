@@ -28,6 +28,7 @@ System.config({
     "react": "npm:react@0.14.0",
     "react-addons-update": "npm:react-addons-update@0.14.0",
     "react-dom": "npm:react-dom@0.14.0",
+    "react-router": "npm:react-router@1.0.0-rc4",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -111,8 +112,20 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:history@1.13.0": {
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
+      "deep-equal": "npm:deep-equal@1.0.1",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "invariant": "npm:invariant@2.1.2",
+      "qs": "npm:qs@4.0.0",
+      "warning": "npm:warning@2.1.0"
+    },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:invariant@2.1.2": {
+      "loose-envify": "npm:loose-envify@1.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:jstransform@10.1.0": {
       "base62": "npm:base62@0.1.1",
@@ -144,11 +157,22 @@ System.config({
       "asap": "npm:asap@2.0.3",
       "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
+    "npm:qs@4.0.0": {
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
     "npm:react-addons-update@0.14.0": {
       "react": "npm:react@0.14.0"
     },
     "npm:react-dom@0.14.0": {
       "react": "npm:react@0.14.0"
+    },
+    "npm:react-router@1.0.0-rc4": {
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "history": "npm:history@1.13.0",
+      "invariant": "npm:invariant@2.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "warning": "npm:warning@2.1.0"
     },
     "npm:react@0.14.0": {
       "envify": "npm:envify@3.4.0",
@@ -188,6 +212,10 @@ System.config({
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:warning@2.1.0": {
+      "loose-envify": "npm:loose-envify@1.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     }
   }

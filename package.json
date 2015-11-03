@@ -35,7 +35,8 @@
       "moment": "npm:moment@^2.10.6",
       "react": "npm:react@^0.14.0",
       "react-addons-update": "npm:react-addons-update@^0.14.0",
-      "react-dom": "npm:react-dom@^0.14.0"
+      "react-dom": "npm:react-dom@^0.14.0",
+      "react-router": "npm:react-router@^1.0.0-rc4"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
