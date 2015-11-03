@@ -74,9 +74,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/', (req, res) => {
-  podio.request('GET', '/org/').then(result => {
-    res.render('index')
-  })
+  res.render('index')
 })
 
 app.get('/callback', (req, res) => {
