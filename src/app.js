@@ -1,4 +1,5 @@
 let express = require('express')
+let bodyParser = require('body-parser')
 let app = express()
 let podioJS = require('podio-js').api
 let winston = require('winston')
@@ -58,6 +59,7 @@ app.set('views', __dirname + '/views/')
 app.use('/client', express.static('src/client'))
 
 // Middleware
+app.use(bodyParser.json())
 app.use((req, res, next) => {
 
   if (req.url === '/auth') return next();
@@ -104,7 +106,7 @@ app.all('/proxy*', (req, res) => {
 
   winston.log('debug', method, url)
 
-  podio.request(method, url).then(result => {
+  podio.request(method, url, req.body).then(result => {
     res.json(result)
   })
   .catch(err => {

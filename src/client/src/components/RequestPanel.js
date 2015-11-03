@@ -73,6 +73,21 @@ export default class RequestPanel extends Component {
     }, {});
   }
 
+  ensureCorrectType(spec, key, value) {
+
+    let keyType = _.get(spec, key);
+
+    switch (keyType) {
+      case 'number':
+      case 'integer':
+        return Number(value);
+      case 'boolean':
+        return Boolean(value);
+      default:
+        return String(value);
+    }
+  }
+
   forEachUrlParam(url, fn) {
 
     let regex = /:([a-z0-9-_]+)([/]|$)/g;
@@ -129,7 +144,11 @@ export default class RequestPanel extends Component {
     };
 
     let requestOptions = {
-      method: method
+      method: method,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      } 
     };
 
     if (!~['GET', 'HEAD'].indexOf(method.toUpperCase())) {
@@ -156,8 +175,7 @@ export default class RequestPanel extends Component {
   handleChangeParam(key, evt) {
 
     this.setState(previousState => {
-
-      previousState.requestData[key] = evt.target.value;
+      previousState.requestData[key] = this.ensureCorrectType(previousState.requestSpec, key, evt.target.value);
       previousState.url = this.formatUrl(this.props.url, previousState.requestData)
       return previousState;
     });
