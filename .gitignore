@@ -7,3 +7,4 @@ src/sessionStore.json
 src/client/dep-bundle.js
 src/tmp/
 src/client/style.css
+.idea/

@@ -23,6 +23,11 @@ export default class Root extends Component {
         </Section>
         <Section title="User">
           <RequestPanel url="/user/" title="Get User" />
+          <RequestPanel url="/user/status" title="Get User Status" />
+        </Section>
+        <Section title="Tasks">
+          <RequestPanel url="/task/:task_id" title="Get Task" />
+          <RequestPanel url="/task/:task_id" method="DELETE" title="Delete Task" />
         </Section>
         <Section title="Spaces">
           <RequestPanel url="/space/:space_id" title="Get Space" />
