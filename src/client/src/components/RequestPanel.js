@@ -58,6 +58,8 @@ export default class RequestPanel extends Component {
           return Math.random() * 100;
         case 'integer':
           return Math.round(Math.random() * 100);
+        case 'boolean':
+          return true;
         default:
           return 'Default value'
       }
