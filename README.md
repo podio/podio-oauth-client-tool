@@ -80,4 +80,4 @@ Input fields for request body parameters can be made available via the `body` pa
 }
 ```
 
-The RequestPanel components are found in `src/client/src/components/Root.js`.
+The RequestPanel components are found in `src/client/src/components/Routes.js`.
