@@ -12,7 +12,9 @@ export default class Root extends Component {
             space_id: 'integer',
             config: {
               name: 'string',
-              type: 'string'
+              type: 'string',
+              item_name: 'string',
+              icon: 'string'
             }
           }} />
           <RequestPanel url="/app/:app_id" title="Get app" />
