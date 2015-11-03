@@ -101,8 +101,9 @@ app.get('/logout', (req, res) => {
 })
 
 app.all('/proxy*', (req, res) => {
-  let url = req.params[0]
-  let { method } = req
+  let { method, url } = req
+
+  url = url.replace(/^[/]proxy/, '')
 
   winston.log('debug', method, url)
 

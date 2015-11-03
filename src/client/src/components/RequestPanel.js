@@ -9,12 +9,14 @@ export default class RequestPanel extends Component {
     super();
 
     let urlParams = this.extractUrlParams(props.url);
+    let queryParams = this.extractQueryParams(props.url);
 
     let urlData = this.generateData(urlParams);
-    let bodyData = this.generateData(this.flattenObject(props.body))
+    let queryData = this.generateData(queryParams);
+    let bodyData = this.generateData(this.flattenObject(props.body));
 
-    let requestSpec = Object.assign(urlParams, props.body);
-    let requestData = Object.assign(urlData, bodyData)
+    let requestSpec = Object.assign(urlParams, queryParams, props.body);
+    let requestData = Object.assign(urlData, queryData, bodyData)
 
     this.state = {
       requestData: requestData,
@@ -75,9 +77,7 @@ export default class RequestPanel extends Component {
 
   ensureCorrectType(spec, key, value) {
 
-    let keyType = _.get(spec, key);
-
-    switch (keyType) {
+    switch (_.get(spec, key)) {
       case 'number':
       case 'integer':
         return Number(value);
@@ -90,7 +90,18 @@ export default class RequestPanel extends Component {
 
   forEachUrlParam(url, fn) {
 
-    let regex = /:([a-z0-9-_]+)([/]|$)/g;
+    let regex = /:([a-z0-9-_]+)([/]|$|[?])/g;
+    let match = regex.exec(url);    
+
+    while (match != null) {
+      fn(match);
+      match = regex.exec(url);
+    }
+  }
+
+  forEachQueryParam(url, fn) {
+
+    let regex = /(\&|\?)([a-zA-Z0-9-_]+)=([a-zA-Z0-9-_]+)/g;
     let match = regex.exec(url);    
 
     while (match != null) {
@@ -105,8 +116,17 @@ export default class RequestPanel extends Component {
 
     this.forEachUrlParam(url, match => {
       params[match[1]] = 'integer'
-    })
+    });
+    return params;
+  }
 
+  extractQueryParams(url) {
+
+    let params = {};
+
+    this.forEachQueryParam(url, match => {
+      params[match[2]] = match[3];
+    })
     return params;
   }
 
@@ -114,7 +134,11 @@ export default class RequestPanel extends Component {
 
     this.forEachUrlParam(url, match => {
       url = url.replace(match[0], values[match[1]] + match[2]);
-    });   
+    });
+
+    this.forEachQueryParam(url, match => {
+      url = url.replace(match[0], (match[0].replace(match[3], values[match[2]])));
+    });
 
     return url;
   }
@@ -175,10 +199,47 @@ export default class RequestPanel extends Component {
   handleChangeParam(key, evt) {
 
     this.setState(previousState => {
-      previousState.requestData[key] = this.ensureCorrectType(previousState.requestSpec, key, evt.target.value);
+
+      let value = evt.target.value;
+
+      if (previousState.requestSpec[key] === 'boolean') {
+        value = evt.target.checked;
+      }
+
+      previousState.requestData[key] = this.ensureCorrectType(previousState.requestSpec, key, value);
       previousState.url = this.formatUrl(this.props.url, previousState.requestData)
       return previousState;
     });
+  }
+
+  _renderInput = key => {
+
+    let keyType = _.get(this.state.requestSpec, key);
+    let input = (
+      <div>{key}: 
+        <input
+          type="text"
+          value={this.state.requestData[key]}
+          onChange={this.handleChangeParam.bind(this, key)}
+        />
+      </div>
+    );
+
+    if(keyType === 'boolean') {
+      input = (
+        <div>{key}: 
+          <input
+            type="checkbox"
+            checked={this.state.requestData[key]}
+            onChange={this.handleChangeParam.bind(this, key)}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className="input" key={key}>{input}</div>
+    );
   }
 
   render() {
@@ -192,21 +253,7 @@ export default class RequestPanel extends Component {
         <div className="title">{title}</div>
       </div>
       <div className="inputs">
-        {
-          Object.keys(this.flattenObject(requestData)).map(key => {
-            return (
-              <div className="input" key={key}>
-                <div>{key}:
-                  <input
-                    type="text"
-                    value={requestData[key]}
-                    onChange={this.handleChangeParam.bind(this, key)}
-                  />
-                </div>
-              </div>
-            );
-          })
-        }
+        {Object.keys(this.flattenObject(requestData)).map(this._renderInput)}
         </div>
         <div className="button">
           <a href="#" onClick={this.send}>{method.toUpperCase()} {url}</a>

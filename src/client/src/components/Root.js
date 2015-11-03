@@ -31,11 +31,7 @@ export default class Root extends Component {
           <RequestPanel url="/user/status" title="Get User Status" />
         </Section>
         <Section title="Search">
-          <RequestPanel url="/search/app/:app_id/space/:space_id" title="Search by app in space" body={{
-            query: 'string',
-            ref_type: 'string',
-            counts: 'boolean'
-          }}/>
+          <RequestPanel url="/search/app/:app_id/space/:space_id?query=string&ref_type=string&counts=boolean" title="Search by app in space" />
         </Section>
         <Section title="Spaces">
           <RequestPanel url="/space/:space_id" title="Get Space" />
@@ -44,7 +40,8 @@ export default class Root extends Component {
           <RequestPanel url="/task/:task_id" title="Get Task" />
           <RequestPanel url="/task/" method="POST" title="Create Task" body={{
             text: 'string',
-            responsible: 'integer'
+            responsible: 'integer',
+            private: 'boolean'
           }} />
           <RequestPanel url="/task/:task_id" method="DELETE" title="Delete Task" />
         </Section>
