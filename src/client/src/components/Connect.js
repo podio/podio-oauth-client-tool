@@ -41,7 +41,7 @@ export default class Connect extends Component {
       let scopePermissions = PERMISSION_TYPES.filter(scopePermission => scope[scopeType][scopePermission]);
 
       if(scopePermissions.length) {
-        return result + scopeType + ':' + scopePermissions.join(',') + ' ';
+        return result + scopeType + ':' + scopePermissions.join(` ${scopeType}:`) + ' ';
       }
       return result;
     }, url + '&scope=');
