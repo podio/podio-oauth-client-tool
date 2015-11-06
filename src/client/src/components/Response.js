@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
 import highlight from 'highlight.js';
+import _ from 'lodash';
 
 export default class Response extends Component {
 
@@ -28,6 +29,8 @@ export default class Response extends Component {
     let { open } = this.state;
     let { time, json, response, url } = this.props;
 
+    let error_description = _.get(json, 'message.error_description');
+
     let className = classNames({
       open: open
     });
@@ -44,6 +47,7 @@ export default class Response extends Component {
             <pre><code className="javascript" ref="code">{JSON.stringify(json, null, 4)}</code></pre>
           </div>
         </div>
+        <div>{error_description}</div>
       </div>
     );
   }
