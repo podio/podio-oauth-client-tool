@@ -33,8 +33,8 @@ export default class Response extends Component {
     });
 
     return (
-      <div className="response" onClick={this.handleClickJson}>
-        <div className="header">
+      <div className="response">
+        <div className="header" onClick={this.handleClickJson}>
           <div className="url">{url}</div>
           <div className="code">{response.status}</div>
           <div className="time">{moment(time).format('hh:mm:ss')}</div>
