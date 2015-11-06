@@ -76,6 +76,30 @@ export class Search extends Component {
   render() {
     return (
       <div>
+        <RequestPanel url="/search/v2" method="POST" title="Search globally v2" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/" method="POST" title="Search globally v1" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/app/:app_id/v2" method="POST" title="Search in app v2" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/app/:app_id/" method="POST" title="Search in app v1" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/org/:org_id/v2" method="POST" title="Search in org v2" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/org/:org_id/" method="POST" title="Search in org v1" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/space/:space_id/v2" method="POST" title="Search in space v2" body={{
+          query: 'string'
+        }}/>
+        <RequestPanel url="/search/space/:space_id/" method="POST" title="Search in space v1" body={{
+          query: 'string'
+        }}/>
         <RequestPanel url="/search/app/:app_id/space/:space_id?query=string&ref_type=string&counts=boolean" title="Search by app in space" />
       </div>
     );
