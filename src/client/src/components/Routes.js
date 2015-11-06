@@ -21,6 +21,24 @@ export class Apps extends Component {
   }
 }
 
+export class Items extends Component {
+  render() {
+    return (
+      <div>
+        <RequestPanel url="/item/:item_id" title="Get item by id" />
+        <RequestPanel url="/item/app/:app_id/external_id/:external_id" title="Get item by external_id" />
+        <RequestPanel url="/app/:app_id/item/:app_item_id" title="Get item by app_item_id" />
+        <RequestPanel url="/item/:item_id" method="DELETE" title="Delete item by id" />
+        <RequestPanel url="/item/app/:app_id" method="POST" title="Create item" body={{
+          fields: {
+            title: "string"
+          }
+        }}/>
+      </div>
+    );
+  }
+}
+
 export class Orgs extends Component {
   render() {
     return (
