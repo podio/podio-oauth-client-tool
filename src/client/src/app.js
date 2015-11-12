@@ -16,6 +16,7 @@ if (rootElement) {
         <Route path="orgs" name="orgs" component={routes.Orgs} />
         <Route path="conversations" name ="conversations" component={routes.Conversations} />
         <Route path="users" name ="users" component={routes.Users} />
+        <Route path="references" name ="references" component={routes.References} />
         <Route path="search" name="search" component={routes.Search} />
         <Route path="spaces" name="spaces" component={routes.Spaces} />
         <Route path="tasks" name ="tasks" component={routes.Tasks} />

@@ -21,6 +21,16 @@ export class Apps extends Component {
   }
 }
 
+export class Conversations extends Component {
+  render() {
+    return (
+      <div>
+        <RequestPanel url="/conversation/:conversation_id" title="Get conversation" />
+      </div>
+    );
+  }
+}
+
 export class Items extends Component {
   render() {
     return (
@@ -51,23 +61,15 @@ export class Orgs extends Component {
   }
 }
 
-export class Conversations extends Component {
+export class References extends Component {
   render() {
     return (
-      <div>
-        <RequestPanel url="/conversation/:conversation_id" title="Get conversation" />
-      </div>
-    );
-  }
-}
-
-export class Users extends Component {
-  render() {
-    return (
-      <div>
-        <RequestPanel url="/user/" title="Get User" />
-        <RequestPanel url="/user/status" title="Get User Status" />
-      </div>
+    <RequestPanel url="reference/search/" method="POST" title="Search for references with an app target" body={{
+          target: 'string',
+          target_params: {
+            app_id: 'integer'
+          }
+        }}/>
     );
   }
 }
@@ -76,27 +78,19 @@ export class Search extends Component {
   render() {
     return (
       <div>
-        <RequestPanel url="/search/v2?query=string" title="Search globally v2" body={{
-          query: 'string'
-        }}/>
+        <RequestPanel url="/search/v2?query=string" title="Search globally v2" />
         <RequestPanel url="/search/" method="POST" title="Search globally v1" body={{
           query: 'string'
         }}/>
-        <RequestPanel url="/search/app/:app_id/v2?query=string" title="Search in app v2" body={{
-          query: 'string'
-        }}/>
+        <RequestPanel url="/search/app/:app_id/v2?query=string" title="Search in app v2" />
         <RequestPanel url="/search/app/:app_id/" method="POST" title="Search in app v1" body={{
           query: 'string'
         }}/>
-        <RequestPanel url="/search/org/:org_id/v2?query=string" title="Search in org v2" body={{
-          query: 'string'
-        }}/>
+        <RequestPanel url="/search/org/:org_id/v2?query=string" title="Search in org v2" />
         <RequestPanel url="/search/org/:org_id/" method="POST" title="Search in org v1" body={{
           query: 'string'
         }}/>
-        <RequestPanel url="/search/space/:space_id/v2?query=string" title="Search in space v2" body={{
-          query: 'string'
-        }}/>
+        <RequestPanel url="/search/space/:space_id/v2?query=string" title="Search in space v2" />
         <RequestPanel url="/search/space/:space_id/" method="POST" title="Search in space v1" body={{
           query: 'string'
         }}/>
@@ -127,6 +121,17 @@ export class Tasks extends Component {
           private: 'boolean'
         }} />
         <RequestPanel url="/task/:task_id" method="DELETE" title="Delete Task" />
+      </div>
+    );
+  }
+}
+
+export class Users extends Component {
+  render() {
+    return (
+      <div>
+        <RequestPanel url="/user/" title="Get User" />
+        <RequestPanel url="/user/status" title="Get User Status" />
       </div>
     );
   }
