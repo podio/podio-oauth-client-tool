@@ -44,6 +44,11 @@ export class Items extends Component {
             title: "string"
           }
         }}/>
+        <RequestPanel url="/item/:item_id" method="PUT" title="Update item" body={{
+          fields: {
+            title: 'string'
+          }
+        }}/>
       </div>
     );
   }
