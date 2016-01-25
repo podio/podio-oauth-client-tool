@@ -31,6 +31,19 @@ export class Conversations extends Component {
   }
 }
 
+export class Globiflow extends Component {
+  render() {
+    return (
+      <div>
+        <RequestPanel url="/globiflow/org" title="Get list of orgs" />
+        <RequestPanel url="/globilow/org/:org_id" title="Get org" />
+        <RequestPanel url="/globiflow/settings" title="Get settings" />
+        <RequestPanel url="/item/app/:app_id" method="PUT" title="Create item" body={{app_button: "boolean"}}/>
+      </div>
+    );
+  }
+}
+
 export class Items extends Component {
   render() {
     return (

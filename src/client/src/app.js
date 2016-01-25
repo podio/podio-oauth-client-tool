@@ -12,6 +12,7 @@ if (rootElement) {
     <Router>
       <Route path="/" component={Root}>
         <Route path="apps" name="apps" component={routes.Apps} />
+        <Route path="globiflow" name="globiflow" component={routes.Globiflow} />
         <Route path="items" name="items" component={routes.Items} />
         <Route path="orgs" name="orgs" component={routes.Orgs} />
         <Route path="conversations" name ="conversations" component={routes.Conversations} />

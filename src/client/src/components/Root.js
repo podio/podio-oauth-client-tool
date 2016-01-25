@@ -9,6 +9,7 @@ export default class Root extends Component {
         <ul>
           <li><Link to="apps">Apps</Link></li>
           <li><Link to="conversations">Conversations</Link></li>
+          <li><Link to="globiflow">Globiflow</Link></li>
           <li><Link to="items">Items</Link></li>
           <li><Link to="orgs">Orgs</Link></li>
           <li><Link to="references">References</Link></li>
