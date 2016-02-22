@@ -44,6 +44,26 @@ export class Globiflow extends Component {
   }
 }
 
+export class Batches extends Component {
+  render() {
+    return (
+      <div>
+        <RequestPanel url="/batch/" title="Get Batches" body={{view: 'string'}} />
+      </div>
+    );
+  }
+}
+
+export class AuthClients extends Component {
+  render() {
+    return (
+      <div>
+        <RequestPanel url="/oauth/grant/client" title="Get granted clients" />
+      </div>
+    );
+  }
+}
+
 export class Items extends Component {
   render() {
     return (

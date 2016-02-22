@@ -17,6 +17,8 @@ export default class Root extends Component {
           <li><Link to="spaces">Spaces</Link></li>
           <li><Link to="tasks">Tasks</Link></li>
           <li><Link to="users">Users</Link></li>
+          <li><Link to="batches">Batches</Link></li>
+          <li><Link to="clients">Auth clients</Link></li>
         </ul>
         { this.props.children }
       </div>

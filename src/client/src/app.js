@@ -21,6 +21,8 @@ if (rootElement) {
         <Route path="search" name="search" component={routes.Search} />
         <Route path="spaces" name="spaces" component={routes.Spaces} />
         <Route path="tasks" name ="tasks" component={routes.Tasks} />
+        <Route path="batches" name ="batches" component={routes.Batches} />
+        <Route path="clients" name ="clients" component={routes.AuthClients} />
       </Route>
     </Router>
     , rootElement
